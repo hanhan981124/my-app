@@ -1,10 +1,10 @@
 <template>
   <el-container>
-    <el-header style="height: 100px;">
+    <el-header style="padding: 0;">
       <common-headeru />
     </el-header>
     <el-container>
-      <el-aside style="width: 300px;">
+      <el-aside style="width: 400px;">
         <common-asideu />
       </el-aside>
       <el-main style="margin-left: 20px; margin-bottom: 0;height: auto;">
@@ -40,32 +40,23 @@
             </el-carousel-item>
           </el-carousel>
         </el-row>
-        <el-row style="margin: 10px;">
-          <div class="content">
-            <span class="clearfix">健康档案</span>
-            <span style="padding-right: 50px;">
-              <el-button type="success" circle size="mini"></el-button>
-              <el-button type="success" circle size="mini"></el-button>
-              <el-button type="danger" circle size="mini"></el-button>
+        <el-row style="margin: 10px;font-size: 24px; padding-top: 20px; display: flex; justify-content: space-between;">
+            健康档案
+            <span >
+              <span style="font-size: 18px;">状态评估：</span>
+              <el-button type="success" circle size="middle" ></el-button>
+              <el-button type="success" circle size="middle" ></el-button>
+              <el-button type="danger" circle size="middle" ></el-button>
             </span>
-          </div>
         </el-row>
         <el-row>
-          <el-card style="margin: 0 auto;text-align: center;">
-            <img src="../assets/images/graph1.jpg" alt="" style="width: 90%;">
+          <el-card style="margin: 0 auto;">
+            <div ref="echarts3" style="height: 260px"></div>
+            <h3>评估建议：</h3>
+            <p style="color: black;font-size: 14px;">1.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
+            <p style="color: black;font-size: 14px;">2.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
+            <p style="color: black;font-size: 14px;">3.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
           </el-card>
-        </el-row>
-        <el-row :gutter="20" class="chart" style="height:300px; margin-right: 0px;padding: 0px;margin: 10px 0; ">
-          <el-col :span="12" style="padding: 0;">
-            <el-card style="height:290px">
-              <img src="../assets/images/graph2.jpg" alt="" style="height:290px;width: 100%;">
-            </el-card>
-          </el-col>
-          <el-col :span="12">
-            <el-card style="height:290px;">
-              <div ref="echarts3" style="height: 290px"></div>
-            </el-card>
-          </el-col>
         </el-row>
 
       </el-main>
@@ -129,17 +120,53 @@ export default {
 
     const echarts3 = echarts.init(this.$refs.echarts3)
     const echarts3Option = {
+      title: {
+        text: '我的健康数据'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        data: ['血压', '血糖', '心率', 'Direct']
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
       xAxis: {
         type: 'category',
-        data: ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        boundaryGap: false,
+        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          data: [120, 200, 150, 300, 150, 260, 320],
-          type: 'line'
+          name: '血压',
+          type: 'line',
+          stack: 'Total',
+          data: [220, 132, 281, 134, 190, 230, 260]
+        },
+        {
+          name: '血糖',
+          type: 'line',
+          stack: 'Total',
+          data: [220, 182, 191, 234, 290, 230, 210]
+        },
+        {
+          name: '心率',
+          type: 'line',
+          stack: 'Total',
+          data: [150, 232, 201, 154, 190, 270, 222]
+        },
+        {
+          name: 'Direct',
+          type: 'line',
+          stack: 'Total',
+          data: [120, 232, 101, 234, 190, 230, 180]
         }
       ]
     }

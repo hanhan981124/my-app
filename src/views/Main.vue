@@ -1,34 +1,29 @@
-<template>
-     <div>
-          <el-container>
-                <el-header style="height: 83px; padding: 0;">
-                     <common-header />
-                </el-header>
-                <el-main>       
-                     <router-view></router-view>
-                </el-main>
-                <el-footer>
-                    <common-bottom />
-                </el-footer>
-                    
-              </el-container>
-          </div> 
+<template> 
+    <el-container>
+        <el-header style="height: 65px; padding: 0;">
+            <common-header />
+        </el-header>
+        <router-view></router-view>
+        <common-footer />
 
+    </el-container>
 </template>
 <script>
-import CommonHeader from '../components/CommonHeader.vue'
-import CommonBottom from '../components/CommonBottom.vue'
-export default{
-    data(){
-        return {}
+import CommonHeader from '@/components/CommonHeader.vue';
+import CommonFooter from '@/components/CommonFooter.vue';
+export default {
+    data() {
+        return {
+
+        }
     },
-         components:{
-             CommonHeader,
-             CommonBottom
-         }
+    components: {
+
+        // eslint-disable-next-line vue/no-unused-components
+        CommonFooter,
+        // eslint-disable-next-line vue/no-unused-components
+        CommonHeader
+    },
 }
 </script>
-<style>
-
- 
-</style>
+<style></style>

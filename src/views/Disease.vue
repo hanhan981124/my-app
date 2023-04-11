@@ -1,4 +1,5 @@
 <template>
+   
   <el-main >
       <el-carousel indicator-position="outside">
         <el-carousel-item v-for="(item,index) in list" :key="index" class="carousel">
@@ -7,10 +8,11 @@
         </el-carousel-item>
       </el-carousel>
     </el-main>
+  
 </template>
 <script>
 import CommonHeader from '@/components/CommonHeader.vue';
- import CommonBottom from '@/components/CommonBottom.vue';
+ import CommonFooter from '@/components/CommonFooter.vue';
 
 export default{
     data() {
@@ -64,7 +66,7 @@ export default{
 components: { 
         
         // eslint-disable-next-line vue/no-unused-components
-        CommonBottom,
+        CommonFooter,
         // eslint-disable-next-line vue/no-unused-components
         CommonHeader
      },

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 //1创建路由组件
 import Home from '../views/Home.vue'
 import User from '../views/User.vue'
+import User1 from '../views/User1.vue'
 import Main from '../views/Main.vue'
 import Disease from '../views/Disease.vue'
 import Search from '../views/Search.vue'
@@ -26,6 +27,7 @@ const routes = [
     ]
   },
     { path: '/user', component: User },
+    { path: '/user1', component: User1 },
     { path: '/search', component: Search },
 ]
 
