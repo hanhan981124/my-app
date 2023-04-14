@@ -8,12 +8,12 @@
         <common-asideu />
       </el-aside>
       <el-main>
-        <el-card> 
+        <el-card style="margin-right: 10px;"> 
         <el-row style="height: 60px;font-size: 24px;">
           <el-col :span="12">知识卡片</el-col>
           <el-col :span="12">
-            <el-input class="input" v-model="input"  placeholder="请输入病情" style="width: 300px;"></el-input>
-            <el-button type="primary" icon="el-icon-search" circle @click="search" style="margin-left: 10px;"></el-button>
+            <el-input class="input" v-model="input"  placeholder="请输入病情" style="width:50%"></el-input> 
+            <el-button type="primary" icon="el-icon-search" circle @click="search" ></el-button>
           </el-col>
         </el-row>    
         <el-row style="height: 300px;max-height: 300px;overflow: auto;">
@@ -285,6 +285,8 @@ export default {
   },
   mounted() {
 
+
+
     const echarts3 = echarts.init(this.$refs.echarts3)
     const echarts3Option = {
       title: {
@@ -294,7 +296,7 @@ export default {
         trigger: 'axis'
       },
       legend: {
-        data: ['血压', '血糖', '心率', 'Direct']
+        data: ['血压', '血糖', '心率', '心电图']
       },
       grid: {
         left: '3%',
@@ -330,7 +332,7 @@ export default {
           data: [150, 232, 201, 154, 190, 270, 222]
         },
         {
-          name: 'Direct',
+          name: '心电图',
           type: 'line',
           stack: 'Total',
           data: [120, 232, 101, 234, 190, 230, 180]

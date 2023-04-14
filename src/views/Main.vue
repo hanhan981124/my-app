@@ -4,7 +4,10 @@
             <common-header />
         </el-header>
         <router-view></router-view>
-        <common-footer />
+        <el-footer>
+            <common-footer />
+        </el-footer>
+
 
     </el-container>
 </template>

@@ -4,62 +4,25 @@
       <div slot="header" class="clearfix" style="padding: 0;">
         智能问答
       </div>
-      <div style="padding: 0;height: 430px;">
-        <el-row type="flex" class="row-bg">
-          <el-col :span="16">
-            <div>
-              <img src="../assets/images/2.webp" alt="" style="height: 20px;width: 20px;border-radius: 80%;">
-              <el-button>你好！</el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg">
-          <el-col :span="16">
-            <div>
-              <img src="../assets/images/2.webp" alt="" style="height: 20px;width: 20px;border-radius: 80%;">
-              <el-button>请问你有什么问题吗？</el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg" justify="end">
-          <el-col :span="8">
-            <div>
-              <el-button>你好！</el-button>
-              <img src="../assets/images/1.webp" alt=""
-                style="height: 20px;width: 20px;border-radius: 80%;text-align: right;">
-
-            </div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg" justify="end">
-          <el-col :span="8">
-            <div>
-              <el-button>你好！</el-button>
-              <img src="../assets/images/1.webp" alt="" style="height: 20px;width: 20px;border-radius: 80%;">
-
-            </div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg" justify="end" style="align-items: end;">
-          <el-col :span="8">
-            <el-button>你好！</el-button>
-            <img src="../assets/images/1.webp" alt="" style="height: 20px;width: 20px;border-radius: 80%;">
-          </el-col>
-        </el-row>
+      <div style="padding: 0;height: 430px;max-height: 430px;overflow-y: scroll;" ref="chatContainer">
+        <div v-for="(item,index) in history" v-if="index%2==0" style="float: right;width: 100%; text-align: right;" :key="index">
+          <span class="chat">{{ item }}</span><img src='../assets/images/1.webp' alt="" class="user">
+        </div>
+        <div  v-else >
+          <img src='../assets/images/2.webp' alt="" class="user">
+          <span class="chat" >{{ item }}</span>
+        </div>
       </div>
-      <span style="padding-bottom: 0;">
-        <el-input v-model="input" placeholder="请输入内容" style="width: 280px;padding: 0;">
-        </el-input>
-      </span>
-      <span>
-        <el-button type="primary" icon="el-icon-check" circle style="width: 40px;"></el-button>
-      </span>
+      <form @submit.prevent="submitQuestion">
+    <input type="text" v-model="question" id="question" name="question" placeholder="请输入病情" style="border-radius: 5px;height: 30px;width: 260px;">
+    <button type="submit"  class="submit">发送</button>
+  </form>
     </el-card>
     <div class="clearfix">
       <el-col :span="12">资源地图</el-col>
       <el-col :span="12">
         <el-input class="input" v-model="input"  placeholder="请输入.." style="width: 100px;"></el-input>
-        <el-button type="primary" icon="el-icon-search" circle @click="search" style="margin-left: 5px;"></el-button>
+        <el-button type="primary" icon="el-icon-search" circle  style="margin-left: 5px;"></el-button>
       </el-col>
     </div>
     <div ref="chart" style="height: 340px;"></div>
@@ -68,15 +31,67 @@
 
 <script>
 import * as echarts from 'echarts'
+import axios from 'axios'
 
 export default {
-  input: '',
+  data() {
+    return {
+  question: '',
+  // history:[
+  //   {
+  //     "send":"user",
+  //     "jieshou":"server",
+  //     "date": "当前时间",
+  //     "content":"你好"
+  //   }
+  // ],
+  history:[],
+  history1:[],
+  answer:'',
+  input:'',
   inputgraph:'',
   name: 'RelationChart',
+  }},
   mounted() {
-    this.initChart()
+    this.initChart();
+     // 滚动到底部
+     this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
+  },
+    updated() {
+    this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
   },
   methods: {
+   
+    submitQuestion: function() {
+      if (this.question==''){
+        this.$message('请输入内容再发送')
+      }else{
+      axios.post('http://10.5.83.162:8000', {
+        prompt: this.question,
+        history: this.history1
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        // console.log(response.data)
+        this.answer = response.data.response
+        this.history1 = response.data.history
+        // console.log(this.answer)
+        this.history.push(this.question);
+        this.history.push(this.answer)
+        // console.log(this.history)
+        this.question = '';
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+    },
+ // 定义向下滚动的方法
+ scrollToTop() {
+  const container = this.$refs.chatContainer;
+  container.scrollTop -= container.clientHeight;
+},
     initChart() {
       const chartDom = this.$refs.chart
       const myChart = echarts.init(chartDom)
@@ -217,8 +232,10 @@ export default {
         ]
       }
       myChart.setOption(option)
-    }
-  }
+    },
+    
+},
+
 }
 </script>
 <sttyle lang="less" scoped>
@@ -235,7 +252,29 @@ export default {
   font-size: 24px;
   padding-top: 30px;
 }
-
+.chat{
+  display: inline-block; 
+  color: #fff;
+  background-color: #2570bf;
+  opacity:0.9; 
+  border: 0.5px solid white; 
+  border-radius: 5px;
+  font-size: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+  .user{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.submit{
+  border-radius: 50%;
+  height: 40px; 
+  background-color: #4397f0;
+   color: #fff; 
+   border: #fff;
+}
 .box-card {
   padding: none;
 }

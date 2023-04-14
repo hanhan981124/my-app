@@ -5,8 +5,8 @@
       <el-button type="primary" icon="el-icon-search" circle @click="disease"></el-button>
     </el-col>
     <el-col :span="18" >
-      <el-card>
-      <el-carousel style="height:400px;font-size: 20px;">
+      <el-card style="height: fit-content;">
+      <el-carousel style="height:420px;font-size: 20px;">
         <el-carousel-item v-for="(item, index) in list" :key="index" class="carousel">
           <img :src="item.imgurl" alt="" class="img">
           <div class="text">{{ item.title }}</div>
@@ -75,6 +75,7 @@ export default {
 .el-main {
   padding: 0;
   height: 100%;
+  
 }
 
 .carousel {
