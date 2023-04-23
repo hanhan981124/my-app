@@ -3,249 +3,361 @@
     <el-header style="padding: 0;">
       <common-headeru />
     </el-header>
-    <el-container>
-      <el-aside style="width: 370px;">
-        <common-asideu />
-      </el-aside>
-      <el-main style=" height: auto;">
-        <el-card style="margin: 10px"> 
-        <el-row style="height: 60px;font-size: 24px;">
+      <el-row>
+      <el-card> 
+        
+        <el-row slot="header" style="height: 50px;font-size: 24px; padding: 0;">
           <el-col :span="12">知识卡片</el-col>
           <el-col :span="12">
-            <el-input class="input" v-model="input"  placeholder="请输入病情" style="width: 300px;"></el-input>
-            <el-button type="primary" icon="el-icon-search" circle @click="search" style="margin-left: 10px;"></el-button>
+            <el-input class="input" v-model="name" id="name" name="name" placeholder="请输入病情" style="width:50%"></el-input> 
+            <el-button type="primary" icon="el-icon-search" circle @click="queryLinks" ></el-button>
           </el-col>
-        </el-row> 
-          
-        <el-row>
-          <el-carousel :interval="5000" arrow="always">
-            <el-carousel-item v-for="(item, index) in list" :key="index">
-              <el-row :gutter="20">
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-card class="box-card1">
-                      <div slot="header" class="clearfix1">
-                        <span style="font-size: 20px;">{{ item.title1 }}</span>
-                      </div>
-                      <div style="height:300px;max-height: 300px;overflow: auto; font-size: 15px;">
-                        {{ item.content1 }}
-                      </div>
-                    </el-card>
-                    <el-card class="box-card1">
-                      <div slot="header" class="clearfix1">
-                        <span style="font-size: 20px;">{{ item.title1 }}</span>
-                      </div>
-                      <div style="height:300px;max-height: 300px;overflow: auto; font-size: 15px;">
-                        {{ item.content1 }}
-                      </div>
-                      <el-divider direction="horizontal" style="color:black;"></el-divider>
-                      <div style="height:300px;max-height: 300px;overflow: auto; font-size: 15px;">
-                        {{ item.content1 }}
-                      </div>
-                    </el-card>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-card class="box-card2">
-                      <div slot="header" class="clearfix1">
-                        <span style="font-size: 20px;">{{ item.title2 }}</span>
-                      </div>
-                      <div style="height:400px;max-height: 400px;overflow: auto; font-size: 15px;">
-                        {{ item.content2 }}
-                      </div>
-                    </el-card>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-card class="box-card3">
-                      <div slot="header" class="clearfix1">
-                        <span style="font-size: 20px;">{{ item.title2 }}</span>
-                      </div>
-                      <div style="height:400px;max-height: 400px;overflow: auto; font-size: 15px;">
-                        {{ item.content2 }}
-                      </div>
-                    </el-card>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-card class="box-card4">
-                      <div slot="header" class="clearfix1">
-                        <span style="font-size: 20px;">{{ item.title2 }}</span>
-                      </div>
-                      <div style="height:400px;max-height: 400px;overflow: auto; font-size: 15px;">
-                        {{ item.content2 }}
-                      </div>
-                    </el-card>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-carousel-item>
-          </el-carousel>
-        
-        </el-row>
-      </el-card>
-      <el-card style="margin: 10px">
-        <el-row style="height: 60px;font-size: 24px;">
-          <el-col :span="12">健康档案</el-col>
-          <el-col :span="12">
-              <span style="font-size: 16px;">状态评估：</span>
-              <el-button type="success" circle size="middle" ></el-button>
-              <el-button type="success" circle size="middle" ></el-button>
-              <el-button type="danger" circle size="middle" ></el-button>
-          </el-col>
-        </el-row>
-        <el-row style="padding-top: 10px;">
-            <div ref="echarts3" style="height: 260px"></div>
-            <h3>评估建议：</h3>
-            <p style="color: black;font-size: 14px;">1.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
-            <p style="color: black;font-size: 14px;">2.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
-            <p style="color: black;font-size: 14px;">3.您今日xxx病症状良好,应注意运动与清淡饮食。</p>
+        </el-row>    
+        <el-row style="height: 300px;max-height: 300px;overflow: auto;">
+          <el-col :span="6">     
+          <el-row>
+            <el-card class="box-card1">
+              <div slot="header" >
+                <p  class="header">{{ list1.title1 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list1.content1 }}
+              </div>
+            </el-card>
           </el-row>
+          <el-row>
+            <el-card class="box-card1">
+              <div slot="header">
+                <p  class="header">{{ list1.title2 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list1.content2 }}
+              </div>
+            </el-card>
+          </el-row>
+          </el-col>
+          <el-col :span="6">
+            <el-row>
+            <el-card class="box-card2" v-for="(item,index) in detailfood1" :key="index">
+              <div slot="header">
+                <p  class="header">{{ item.name }}</p>
+              </div>
+              <div style="font-size: 13px;">
+                {{ item.all }}
+              </div>
+            </el-card>
+          </el-row>        
+          <el-row>
+            <el-card class="box-card2">
+              <div slot="header" >
+                <p  class="header">{{ list2.title1 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list2.content1 }}
+              </div>
+            </el-card>
+          </el-row>
+          <el-row>
+            <el-card class="box-card2">
+              <div slot="header">
+                <p  class="header">{{ list2.title1 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list2.content1 }}
+              </div>
+            </el-card>
+          </el-row>
+          </el-col>
+          <el-col :span="6">
+            <el-row>
+            <el-card class="box-card3" v-for="(item,index) in detaillife1" :key="index">
+              <div slot="header">
+                <p  class="header">{{ item.name }}</p>
+              </div>
+              <div style="font-size: 13px;">
+                {{ item.all }}
+              </div>
+            </el-card>
+          </el-row>        
+          <el-row>
+            <el-card class="box-card3">
+              <div slot="header" >
+                <p  class="header">{{ list3.title1 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list3.content1 }}
+              </div>
+            </el-card>
+          </el-row>
+          <el-row>
+            <el-card class="box-card3">
+              <div slot="header">
+                <p  class="header">{{ list3.title2 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list3.content2 }}
+              </div>
+            </el-card>
+          </el-row>
+          </el-col>
+          <el-col :span="6">     
+          <el-row>
+            <el-card class="box-card4">
+              <div slot="header" >
+                <p  class="header">{{ list4.title1 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list4.content1 }}
+              </div>
+            </el-card>
+          </el-row>
+          <el-row>
+            <el-card class="box-card4">
+              <div slot="header">
+                <p  class="header">{{ list4.title2 }}</p>
+              </div>
+              <div style=" font-size: 13px;">
+                {{ list4.content2 }}
+              </div>
+            </el-card>
+          </el-row>
+          </el-col>
+        </el-row>
       </el-card>
-      </el-main>
-    </el-container>
+    </el-row>
+    <el-row >
+      <el-card style="padding-bottom:5px;height: 580px;">
+      <div slot="header" class="clearfix" style="padding: 0;">
+        智能问答
+      </div>
+      <div style="padding: 0;height: 430px;max-height: 430px;overflow-y: scroll;" ref="chatContainer">
+        <div v-for="(item,index) in history" v-if="index%2==0" style="float: right;width: 100%; text-align: right;" :key="index">
+          <span class="chat">{{ item }}</span><img src='../assets/images/1.webp' alt="" class="user">
+        </div>
+        <div  v-else >
+          <img src='../assets/images/2.webp' alt="" class="user">
+          <span class="chat" >{{ item }}</span>
+        </div>
+      </div>
+      <form @submit.prevent="submitQuestion" style="text-align: center;">
+    <input type="text" v-model="question" id="question" name="question" placeholder="请输入病情" style="border-radius: 5px;height: 30px;width: 380px;"/>
+    <button type="submit"  class="submit">发送</button>
+  </form>
+    </el-card>
+    </el-row>
+    
   </el-container>
 </template>
 
 
 <script >
-import CommonAsideu from '../components/CommonAsideu.vue'
 import CommonHeaderu from '../components/CommonHeaderu.vue'
-import * as echarts from 'echarts'
+import axios from 'axios'
+
 
 export default {
   data() {
     return {
-      input: '',
-      list: [
-        {
-          title1: '生活',
-          content1: '慢性病是慢性非传染性疾病的简称，是对一类起病隐匿全被确认疾病的概括性总称。主要包括以生活方式、环境危险因素为主引起的肿瘤、心脑血管疾病、糖尿病、慢性阻塞性肺疾病等为代表的一组疾病。虽然慢性病的病因复杂因此对慢性病的防治显得尤为重要。',
-          title2: '食谱',
-          content2: ' 饮食方面，尽量实现食物的多样化，以谷薯类为主、粗细搭配、多吃果蔬，兼食畜禽鱼蛋、奶类、大豆坚果类等。少食油腻、高盐、烟熏及腌制食品。清淡饮食，避免饱餐，一般七分饱即可。'
-        },
-        {
-          title1: '保健',
-          content1: '慢性病是慢性非传染性疾未完全被确认疾病的概括性总称。引起的肿瘤、心脑血管疾病、糖尿病、慢性阻塞性肺疾病等为代表的一组疾病。虽然慢性病的病因复杂或尚未明确，但多数疾病却是可以预防和控制的。慢性病在人群中发病率、致残率和死亡率力人口显得尤为重要。',
-          title2: '医疗',
-          content2: ' 饮食方面，尽量实现食物的多样化，以谷薯类为主、粗细搭配、多吃果蔬，兼食畜禽鱼蛋、奶类、大豆坚果类等。少食油腻、高盐、烟熏及腌制食品。清淡饮食，避免饱餐，一般七分饱即可。'
-        }
+      name: '',
+      data:[],
+      detailfood1:[],
+      detaillife1:[],
+      list1: {
+        title1: '膳食补充剂',
+        content1: '慢性病是慢性非传染性疾未完全被确认疾病的概括性总称。引起的肿瘤、心脑血管疾病、糖尿病、慢性阻塞性肺疾病等为代表的一组疾病。虽然慢性病的病因复杂。慢性病在人群中发病率、致残率和死亡率力人口显得尤为重要。',
+        title2: '',
+        content2: '',
+      },
+      list2: {
+        title1: '食谱',
+        content1: ' 饮食方面，尽量实现食物的多样化，以谷薯类为主、粗细搭配、多吃果蔬，兼食畜禽鱼蛋、奶类、大豆坚果类等。少食油腻、高盐、烟熏及腌制食品。清淡饮食，避免饱餐，一般七分饱即可。',
+        title2: '',
+        content2: '',
+  },
+      list3: {
+        
+        title1: '生活',
+        content1:'慢性病是慢性非传染性疾病的简称，主要包括以生活方式、环境危险因素为主引起的肿瘤、心脑血管疾病、糖尿病、慢性阻塞性肺疾病等为代表的一组疾病。虽然慢性病的病因复杂因此对慢性病的防治显得尤为重要。',
+        title2: '生活',
+        content2: '慢性病是慢性非传染性疾病的简称，主要包括以生活方式、环境危险因素为主引起的肿瘤、心脑血管疾病、糖尿病、慢性阻塞性肺疾病等为代表的一组疾病。虽然慢性病的病因复杂因此对慢性病的防治显得尤为重要。'
+      },
+  list4: {
+        title1: '医疗',
+        content1: ' 饮食方面，尽量实现食物的多样化，以谷薯类为主、粗细搭配、多吃果蔬，兼食畜禽鱼蛋、奶类、大豆坚果类等。少食油腻、高盐、烟熏及腌制食品。清淡饮食，避免饱餐，一般七分饱即可。',
+        title2: '',
+        content2: '',
+    
 
-      ],
+  },
+  question: '',
+      // history:[
+      //   {
+      //     "send":"user",
+      //     "jieshou":"server",
+      //     "date": "当前时间",
+      //     "content":"你好"
+      //   }
+      // ],
+      history:[],
+      history1:[],
+      answer:'',
     }
   },
+  mounted() {
+     // 滚动到底部
+     this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
+  },
+    updated() {
+    this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
+  },
   methods: {
-    search(){
-        if (this.input==''){
-        this.$message('请输入内容')
+    queryLinks() {
+      if (this.name==''){
+        this.$message('请输入病情进行查询')
       }else{
-        this.$router.push({
-          path: '/search',
-          query:{
-           input:this.input
-          }
-      })
+      axios.post('http://10.5.83.135:8080/graph', JSON.stringify({name: this.name}), {
+       headers: {'Content-Type': 'application/json'}
+      }).then(response => {
+        const foods = [];
+        // 使用 Array.prototype.filter() 方法过滤出标签为“美食”的数据
+        const filteredData1 = response.data.data.filter(item => item.labels === "meishi");
+        // 将符合条件的数据存储到前端数组中
+        filteredData1.forEach(item => {
+          foods.push(item);
+        });
+         const detailfood=foods.map(item => ({ 
+            name: item.name ,
+            all:item.food_ingre,
+         }));
+         const life = [];
+        // 使用 Array.prototype.filter() 方法过滤出标签为“美食”的数据
+        const filteredData2 = response.data.data.filter(item => item.labels === "knowledge");
+        // 将符合条件的数据存储到前端数组中
+        filteredData2.forEach(item => {
+          life.push(item);
+        });
+         const detaillife=life.map(item => ({ 
+            name: item.name ,
+            all:item.content,
+         }));
+         this.detailfood1=detailfood,
+         this.detaillife1=detaillife,
+        console.log(this.detailfood1)
+        console.log(this.detaillife1)
+        console.log(response.data)
+}).catch(error => {
+// 处理错误
+console.error(error);
+console.log("?????")
+});
+}
+    },
+    submitQuestion: function() {
+      if (this.question==''){
+        this.$message('请输入内容再发送')
+      }else{
+      axios.post('http://10.5.83.162:8000', {
+        prompt: this.question,
+        history: this.history1
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        // console.log(response.data)
+        this.answer = response.data.response
+        this.history1 = response.data.history
+        // console.log(this.answer)
+        this.history.send.push(this.question);
+        this.history.answer.push(this.answer)
+        // console.log(this.history)
+        this.question = '';
+      }).catch(error => {
+        console.log(error);
+      });
     }
     },
   },
-  components: {
-    CommonAsideu,
-    CommonHeaderu
+   // 定义向下滚动的方法
+ scrollToTop() {
+    const container = this.$refs.chatContainer;
+    container.scrollTop -= container.clientHeight;
   },
-  mounted() {
-
-    const echarts3 = echarts.init(this.$refs.echarts3)
-    const echarts3Option = {
-      title: {
-        text: '我的健康数据'
-      },
-      tooltip: {
-        trigger: 'axis'
-      },
-      legend: {
-        data: ['血压', '血糖', '心率', 'Direct']
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          name: '血压',
-          type: 'line',
-          stack: 'Total',
-          data: [220, 132, 281, 134, 190, 230, 260]
-        },
-        {
-          name: '血糖',
-          type: 'line',
-          stack: 'Total',
-          data: [220, 182, 191, 234, 290, 230, 210]
-        },
-        {
-          name: '心率',
-          type: 'line',
-          stack: 'Total',
-          data: [150, 232, 201, 154, 190, 270, 222]
-        },
-        {
-          name: 'Direct',
-          type: 'line',
-          stack: 'Total',
-          data: [120, 232, 101, 234, 190, 230, 180]
-        }
-      ]
-    }
-    echarts3.setOption(echarts3Option)
-
+  components: {
+    CommonHeaderu
   }
-
 }
 
 </script>
 <style scoped>
-
 .box-card1 {
+  margin: 20px;
   height: 300px;
+  max-height: 300px;
   overflow: auto;
-  background-color: bisque;
+  background-color: rgb(245, 211, 170);
 }
 .box-card2 {
-  height: 380px;
+  margin: 20px;
+  height: 300px;
+  max-height: 300px;
   overflow: auto;
   background-color: rgb(100, 224, 231);
 }
 .box-card3 {
-  height: 380px;
+  margin: 20px;
+  height: 300px;
+  max-height: 300px;
   overflow: auto;
   background-color: rgb(241, 205, 238);
 }
 .box-card4 {
-  height: 380px;
+  margin: 20px;
+  height: 300px;
+  max-height: 300px;
   overflow: auto;
   background-color: rgb(244, 248, 187);
+}
+.header{
+  font-size: 15px; 
+  color: #000;
+   height: 30px;
+   margin: 0;
+   padding: 0;
 }
 .content {
   display: flex;
   justify-content: space-between;
 }
 
-.clearfix1 {
-  height: 20px;
+.clearfix {
+  align-items: center;
+  color: #131313;
   font-size: 24px;
+  padding-top: 30px;
+}
+.chat{
+  display: inline-block; 
+  color: #fff;
+  background-color: #2570bf;
+  opacity:0.9; 
+  border: 0.5px solid white; 
+  border-radius: 5px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+  .user{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.submit{
+  border-radius: 50%;
+  height: 40px; 
+  background-color: #4397f0;
+   color: #fff; 
+   border: #fff;
 }
 
 </style>

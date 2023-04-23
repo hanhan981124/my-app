@@ -7,6 +7,7 @@ import User1 from '../views/User1.vue'
 import Main from '../views/Main.vue'
 import Disease from '../views/Disease.vue'
 import Search from '../views/Search.vue'
+import Question from '../views/Question.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,7 @@ const routes = [
     { path: '/user', component: User },
     { path: '/user1', component: User1 },
     { path: '/search', component: Search },
+    { path: '/question', component: Question },
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
