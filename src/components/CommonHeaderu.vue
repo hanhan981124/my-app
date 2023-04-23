@@ -11,7 +11,7 @@
   <el-col :span="8"  class="r-content">
     <img src='../assets/images/1.webp' alt="" class="user">
     <el-divider direction="vertical"></el-divider>
-    <span>个人中心</span>
+    <span @click="question">调查问卷</span>
     <el-divider direction="vertical"></el-divider>
     <span>关于我们</span>
   </el-col>
@@ -28,11 +28,12 @@ export default {
  
  },
     methods: {
-     
     user(){
       this.$router.push('/user')
     },
-
+    question(){
+      this.$router.push('/question')
+    }
       
      
       
