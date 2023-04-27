@@ -134,9 +134,8 @@
         <div v-for="(item,index) in history" v-if="index%2==0" style="float: right;width: 100%; text-align: right;" :key="index">
           <span class="chat">{{ item }}</span><img src='../assets/images/1.webp' alt="" class="user">
         </div>
-        <div  v-else >
-          <img src='../assets/images/2.webp' alt="" class="user">
-          <span class="chat" >{{ item }}</span>
+        <div v-else>
+          <img src='../assets/images/2.webp' alt="" class="user"><span class="chat" >{{ item }}</span>
         </div>
       </div>
       <form @submit.prevent="submitQuestion" style="text-align: center;">
@@ -264,13 +263,14 @@ console.log("?????")
           'Content-Type': 'application/json'
         }
       }).then(response => {
-        // console.log(response.data)
         this.answer = response.data.response
         this.history1 = response.data.history
-        // console.log(this.answer)
-        this.history.send.push(this.question);
-        this.history.answer.push(this.answer)
-        // console.log(this.history)
+        this.history.push(this.question);
+        this.history.push(this.answer)
+        
+        // let text=[]
+        // text.push(this.answer)
+        
         this.question = '';
       }).catch(error => {
         console.log(error);

@@ -8,7 +8,7 @@
         <div v-for="(item,index) in history" v-if="index%2==0" style="float: right;width: 100%; text-align: right;" :key="index">
           <span class="chat">{{ item }}</span><img src='../assets/images/1.webp' alt="" class="user">
         </div>
-        <div  v-else >
+        <div v-else>
           <img src='../assets/images/2.webp' alt="" class="user">
           <span class="chat" >{{ item }}</span>
         </div>

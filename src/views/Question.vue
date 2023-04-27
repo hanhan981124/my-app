@@ -1,107 +1,85 @@
 <template>
+  
     <el-container>
-      <el-header style="padding: 0;">
+      <el-header style="padding: 0;text-align: center;">
         <common-headeru />
       </el-header>
-      <el-form :model="form" :rules="rules" ref="form">
-        <el-card style="background-color:gainsboro; margin: 10px;;">
-            <p slot="header" style="font-size: 15px;color:black;" >基础信息</p>
-            <label>您的姓名：</label>
-                <input type="text" v-model="form.name" required><br><br>
-                <label>您的年龄：</label>
-                <input type="number" v-model.number="form.age" min="1" max="150" required><br><br>
-                <label>您的性别：</label>
-                <select v-model="form.gender" required>
-                    <option value="">请选择</option>
-                    <option value="男">男</option>
-                    <option value="女">女</option>
-                    <option value="其他">其他</option>
-                </select><br><br>
-        </el-card>
-        <el-card style="background-color: gainsboro; margin: 10px;">
-            <p slot="header" style="font-size: 15px;color:black;">生活方式</p>
-            <el-input type="textarea" v-model="form.style" placeholder="例如:素食者、加班熬夜不规律..."></el-input>
-        </el-card> 
-        <el-card style="background-color: gainsboro; margin: 10px;">
-            <p slot="header" style="font-size: 15px;color:black;">当前症状</p>
-            <el-input type="textarea" v-model="form.sympotem" placeholder="例如:焦虑、失眠..."></el-input>
-        </el-card>        
-        <el-card style="background-color: gainsboro; margin: 10px;">
-            <p slot="header" style="font-size: 15px;color:black;">慢性病</p>
-            <el-checkbox-group v-model="form.type">
-                <el-checkbox label="痛风" name="type"></el-checkbox>
-                <el-checkbox label="焦虑" name="type"></el-checkbox>
-                <el-checkbox label="抑郁症" name="type"></el-checkbox>              
-                <el-checkbox label="青光眼" name="type"></el-checkbox>
-                <el-checkbox label="白内障" name="type"></el-checkbox>
-                <el-checkbox label="高血压" name="type"></el-checkbox>
-                <el-checkbox label="高血脂" name="type"></el-checkbox>
-                <el-checkbox label="高血糖" name="type"></el-checkbox>
-                <el-checkbox label="冠心病" name="type"></el-checkbox>
-                <el-checkbox label="关节炎" name="type"></el-checkbox>
-                <el-checkbox label="肝硬化" name="type"></el-checkbox>
-                <el-checkbox label="脑出血" name="type"></el-checkbox>
-                <el-checkbox label="恶性肿瘤" name="type"></el-checkbox>
-                <el-checkbox label="骨质疏松症" name="type"></el-checkbox>              
-                <el-checkbox label="老年性痴呆" name="type"></el-checkbox>
-                <el-checkbox label="2型糖尿病" name="type"></el-checkbox>
-                <el-checkbox label="骨质疏松症" name="type"></el-checkbox>  
-                <el-checkbox label="支气管哮喘" name="type"></el-checkbox>
-                <el-checkbox label="慢性支气管炎" name="type"></el-checkbox>    
-                <el-checkbox label="类风湿性关节炎" name="type"></el-checkbox>   
-                </el-checkbox-group>
-        </el-card>        
-     <el-form-item style="text-align: center;">
-        <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
+      <div style="margin: 10px;">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <el-form-item label="姓名" prop="name">
+    <el-input v-model="ruleForm.name" style="width: 30%;"></el-input>
   </el-form-item>
-    </el-form>
+  <el-form-item label="性别" prop="gender">
+    <el-select v-model="ruleForm.gender" placeholder="请选择性别" style="width: 20%;">
+      <el-option label="男" value="m"></el-option>
+      <el-option label="女" value="w"></el-option>
+    </el-select>
+  </el-form-item>
+  <el-form-item label="年龄" prop="age">
+    <el-input v-model="ruleForm.age" style="width: 20%;"></el-input>
+  </el-form-item>
+  <el-form-item label="生活方式" prop="style">
+    <el-input type="textarea" v-model="ruleForm.style" placeholder="例如：素食者、加班熬夜不规律"></el-input>
+  </el-form-item>
+  <el-form-item label="当前症状" prop="symptom">
+    <el-input type="textarea" v-model="ruleForm.symptom" placeholder="例如：失眠，焦虑"></el-input>
+  </el-form-item>
+  <el-form-item label="慢性病" prop="type">
+    <el-checkbox-group v-model="ruleForm.type">
+      <el-checkbox label="痛风" name="type"></el-checkbox>
+      <el-checkbox label="高血压" name="type"></el-checkbox>
+      <el-checkbox label="高血脂" name="type"></el-checkbox>
+      <el-checkbox label="高血糖" name="type"></el-checkbox>
+    </el-checkbox-group>
+  </el-form-item> 
+  <el-form-item>
+    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+    <el-button @click="resetForm('ruleForm')">重置</el-button>
+  </el-form-item>
+</el-form>   
+</div> 
     </el-container>
-  </template>
-  
-  
+  </template> 
   <script >
   import CommonHeaderu from '../components/CommonHeaderu.vue'
-  import axios from 'axios'
-  
-  
+  import axios from 'axios'  
   export default {
     data() {
       return {
-        form: {
-            name:'',
-            age:'',
-            gender:'',
-            style:'',
-            sympotem:'',
-            type:[],
+        ruleForm: {
+          name: '',
+          gender: '',
+          age:'',
+          style:'',
+          symptom:'',
+          type: []
         },
-            rules: {
-                name: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' },
-                ],
-                age: [
-                    { required: true, message: '请输入年龄', trigger: 'change' }
-                ],
-                gender: [
-                    { required: true, message: '请选择性别', trigger: 'change' }
-                ],
-                style:[
-                    { required: true, message: '请输入生活方式', trigger: 'blur' }
-                ],
-                sympotem:[
-                    { required: true, message: '请选择症状', trigger: 'blur' }
-                ],
-                type: [
-                    { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-                ],
-                }
-        }  
+        rules: {
+          name: [
+            { required: true, message: '请输入名称', trigger: 'blur' },
+          ],
+          gender: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+          ],
+          age: [
+            { required: true, message: '请输入年龄', trigger: 'blur' },
+          ],
+          type: [
+            { type: 'array', required: true, message: '请选择慢性病', trigger: 'change' }
+          ],
+          style: [
+            { required: true, message: '请选择活动资源', trigger: 'blur' }
+          ],
+          symptom: [
+            { required: true, message: '请填写活动形式', trigger: 'blur' }
+          ]
+        }
+        };  
         
       },
    
-    methods: {
-        submitForm(formName) {
+      methods: {
+      submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');

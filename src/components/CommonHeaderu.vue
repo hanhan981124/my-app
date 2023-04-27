@@ -57,7 +57,7 @@ export default {
   }
 
 .header-container {
-  background-color: #2570bf;
+  background-color: #78797a;
   height: 60px;
   width:auto;
   display: flex;
